@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { listUserContoller } from "../components/User/UseCases/ListUser";
+import { findUserByEmailController } from "../components/User/UseCases/FindUserByEmail";
 
 
 const userRoutes = Router();
@@ -34,23 +34,25 @@ const userRoutes = Router();
 
 /**
  * @swagger
- * /user/:id:
+ * /user/{email}:
  *  get:
- *    summary: Busca usuario
+ *    summary: Get user or
  *    tags: [User]
+ *    parameters:
+ *      - in: path
+ *        name: email
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: The user email
  *    responses:
  *      200:
- *        description: Lista de usuarios
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
-*                 $ref: '#/components/schemas/User'
- *   
+ *        description: Get your user
+ *      400: 
+ *        description: Email undefined or invalid
  */
-userRoutes.get('/user' , (request: Request, response: Response) => {
-  return listUserContoller.handle(request, response);
+userRoutes.get('/:email' , (request: Request, response: Response) => {
+  return findUserByEmailController.handle(request, response);
 })
 
 
@@ -58,7 +60,7 @@ userRoutes.get('/user' , (request: Request, response: Response) => {
  * @swagger
  * /user:
  *  post:
- *    summary: Criar novo usuario
+ *    summary: Create new user
  *    tags: [User]
  *    requestBody:
  *      required: true
@@ -68,7 +70,7 @@ userRoutes.get('/user' , (request: Request, response: Response) => {
  *            $ref: '#/components/schemas/User'
  *    responses:
  *      200:
- *        description: Lista de usuarios
+ *        description: Create user success
  *        content:
  *          application/json:
  *            schema:
@@ -76,12 +78,14 @@ userRoutes.get('/user' , (request: Request, response: Response) => {
  *              items:
  *                $ref: '#/components/schemas/User'
  *      400:
- *        description: Campo indefinido ou invalido
+ *        description: Field undefined or invalid
  *   
  */
+
 userRoutes.post('/user' , (request: Request, response: Response) => {
-  return listUserContoller.handle(request, response);
+  return findUserByEmailController.handle(request, response);
 })
+
 
 
 export { userRoutes };

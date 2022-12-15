@@ -1,6 +1,8 @@
-import { IApiResult } from "../../../types/IApiResult";
+import { ApiResultType } from "../../../types/IApiResult";
+import { UserProps } from "../Model/User";
 
 
 export interface IUserRepository {
-  list: () => IApiResult;
+  create: (user: Omit<UserProps, '_id'>) => ApiResultType;
+  findByEmail: (email: string) => ApiResultType;
 }
